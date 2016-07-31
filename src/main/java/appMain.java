@@ -2,9 +2,11 @@
  * Created by Luke on 7/31/16.
  */
 
-import java.util.Scanner;;
+import summer.ManipulateDate;
 
-public class main {
+import java.util.Scanner;
+
+public class appMain {
     public static void main(String[] args) {
         appInitial();
         selectApp();
@@ -29,14 +31,13 @@ public class main {
 
         // run the selected apps.
         try {
-            int Id = 0;
-            Id = Integer.parseInt(input.trim());
+            int Id = Integer.parseInt(input.trim());
             switch (Id) {
                 case (1):
-                    Summer.HelloWorld.HelloWorld();
+                    summer.HelloWorld.helloWorld();
                     break;
                 case (2):
-                    Summer.ManipulatDate.ManipulatDate();
+                    ManipulateDate.manipulateDate();
                     break;
                 default:
                     System.out.print("Cannot find ID \"" + Id + "\". Please try again.");

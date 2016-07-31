@@ -1,10 +1,6 @@
-package Summer;
-
-/**
- * Created by Luke on 7/31/16.
- */
+package summer;
 public class HelloWorld {
-    public static void HelloWorld()
+    public static void helloWorld()
     {
         System.out.print("Luke(Yaolong) Li, Financial Mathematics, Courant Institute");
     }
