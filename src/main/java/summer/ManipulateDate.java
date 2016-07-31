@@ -1,8 +1,14 @@
 package summer;
 
+import summer.common.DataHandler;
+
 public class ManipulateDate {
     public static void manipulateDate() {
-        // quickSortArrayList(List<PriceRecord> list, boolean isByDate, boolean isDescending)
-        summer.common.DataHandler.loadPriceData("prices.csv", "QuickSort", true, false);
+
+        DataHandler dataHandler = new DataHandler();
+        // quickSortArrayList(String fileName, String sortMethod, boolean isDescending, boolean isByDate)
+        dataHandler.loadPriceData("prices.csv", "QuickSort", false, true);
+
+        dataHandler.correctPrices("corrections.csv");
     }
 }
