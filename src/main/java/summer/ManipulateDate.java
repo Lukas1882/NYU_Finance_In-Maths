@@ -7,7 +7,7 @@ public class ManipulateDate {
 
         DataHandler dataHandler = new DataHandler();
         // quickSortArrayList(String fileName, String sortMethod, boolean isDescending, boolean isByDate)
-        dataHandler.loadPriceData("prices.csv", "QuickSort", false, true);
+        dataHandler.loadPriceData("prices.csv", "QuickSort", false, false);
 
         dataHandler.correctPrices("corrections.csv");
     }

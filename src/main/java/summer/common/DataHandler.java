@@ -49,59 +49,55 @@ public class DataHandler {
     }
 
     public void insertPrice(PriceRecord record){
-        // If exist, update the record
+        // If exist, delete the record
         boolean isExist = false;
         for (int i = 0; i< priceList.size();i++)
         {
             if(record.getDate().equals(priceList.get(i).getDate()))
             {
                 isExist = true;
-                priceList.set(i, record);
+                priceList.remove(i);
             }
         }
-        // If cannot find this record, add this record into list.
-        if (!isExist)
-        {
-            if (isByDate){
-                if (isDescending)
+        // Add this record into list.
+        if (isByDate){
+            if (isDescending)
+            {
+                for(int i = 0; i < priceList.size();i++)
                 {
-                    for(int i = 0; i < priceList.size();i++)
-                    {
-                        if (record.getDate().after(priceList.get(i).getDate())){
-                          priceList.add(i,record);
-                            break;
-                        }
+                    if (record.getDate().after(priceList.get(i).getDate())){
+                        priceList.add(i,record);
+                        break;
                     }
-                } else {
-                    for(int i = 0; i < priceList.size();i++)
-                    {
-                        if (record.getDate().before(priceList.get(i).getDate())){
-                            priceList.add(i,record);
-                            break;
-                        }
-                    }
-            }
+                }
             } else {
-                if (isDescending)
+                for(int i = 0; i < priceList.size();i++)
                 {
-                    for(int i = 0; i < priceList.size();i++)
-                    {
-                        if (record.getAdjClose() > priceList.get(i).getAdjClose()){
-                            priceList.add(i,record);
-                            break;
-                        }
-                    }
-                } else {
-                    for(int i = 0; i < priceList.size();i++)
-                    {
-                        if (record.getAdjClose() < priceList.get(i).getAdjClose()){
-                            priceList.add(i,record);
-                            break;
-                        }
+                    if (record.getDate().before(priceList.get(i).getDate())){
+                        priceList.add(i,record);
+                        break;
                     }
                 }
             }
-
+        } else {
+            if (isDescending)
+            {
+                for(int i = 0; i < priceList.size();i++)
+                {
+                    if (record.getAdjClose() > priceList.get(i).getAdjClose()){
+                        priceList.add(i,record);
+                        break;
+                    }
+                }
+            } else {
+                for(int i = 0; i < priceList.size();i++)
+                {
+                    if (record.getAdjClose() < priceList.get(i).getAdjClose()){
+                        priceList.add(i,record);
+                        break;
+                    }
+                }
+            }
         }
     }
 
