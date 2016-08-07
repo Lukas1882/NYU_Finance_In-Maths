@@ -1,0 +1,11 @@
+The Prices of SPY between 08/15/2004 and 08/20/2004 are: 
+08/16/2004 : 94.42
+08/17/2004 : 94.95
+08/19/2004 : 95.64
+08/18/2004 : 95.92
+08/20/2004 : 96.32
+
+The Average Price of SPY between 08/15/2004 and 09/15/2004 is: 97.09409090909092
+
+The Maximum Price of SPY between 04/15/2004 and 06/15/2004 is: 99.77
+

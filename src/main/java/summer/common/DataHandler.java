@@ -25,16 +25,48 @@ public class DataHandler {
         } else {
             BubbleSort.bubbleSortArrayList(priceList, isDescending, isByDate);
         }
-
-
-
     }
 
 
 
-    public void getPrices() {
-
+    public List<PriceRecord> getPrices(String startDateStr, String endDateStr ) {
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        List<PriceRecord> selectedPriceList =  new ArrayList<PriceRecord>();
+        try {
+            Date starDate = format.parse(startDateStr);
+            Date endDate = format.parse(endDateStr);
+            for(int i =0; i< priceList.size();i++){
+                if((!priceList.get(i).getDate().after(endDate) && (!priceList.get(i).getDate().before(starDate)))){
+                    selectedPriceList.add(priceList.get(i));
+                }
+            }
+        } catch (Exception ex) {
+            System.out.print(ex.getMessage());
+        }
+        return selectedPriceList;
     }
+
+    public double computeAverage(String startDateStr, String endDateStr ){
+
+        List<PriceRecord> selectedPriceList = getPrices( startDateStr,  endDateStr );
+        double totalPrice = 0;
+        for(PriceRecord record : selectedPriceList){
+            totalPrice += record.getAdjClose();
+        }
+        return totalPrice/selectedPriceList.size();
+    }
+
+    public double computeMax(String startDateStr, String endDateStr ){
+        List<PriceRecord> selectedPriceList = getPrices( startDateStr,  endDateStr );
+        double maxPrice = selectedPriceList.get(0).getAdjClose();
+        for(PriceRecord record : selectedPriceList){
+            if (maxPrice<record.getAdjClose()){
+                maxPrice = record.getAdjClose();
+            }
+        }
+        return maxPrice;
+    }
+
 
     public void correctPrices(String fileName){
         List<PriceRecord> correctionList = loadFile(fileName);
@@ -105,9 +137,8 @@ public class DataHandler {
     private  List<PriceRecord>  loadFile(String fileName) {
         List<PriceRecord> list = new ArrayList<PriceRecord>();
         // read the file
-        final String dir = System.getProperty("user.dir") + "/src/main/resources/files/";
         try {
-            Reader in = new FileReader(dir + fileName);
+            Reader in = new FileReader(fileName);
             Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader().parse(in);
             DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
             // save the data into list
