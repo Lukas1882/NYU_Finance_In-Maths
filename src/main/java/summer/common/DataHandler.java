@@ -67,6 +67,51 @@ public class DataHandler {
         return maxPrice;
     }
 
+    public List<Double> computeMovingAverage (String startDateStr, String endDateStr, int windowSize)
+    {
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = format.parse(startDateStr);
+            endDate = format.parse(endDateStr);
+        } catch(Exception ex){
+            System.out.print(ex.getMessage());
+        }
+
+        List<Double> aveList =  new ArrayList<Double>();
+        List<PriceRecord> dateSortedPrices  =  new ArrayList<PriceRecord>(priceList);
+        // Date sort this new list.
+        QuickSort.quickSortArrayList(dateSortedPrices, false ,true);
+        for(PriceRecord record : dateSortedPrices){
+            if ((!record.getDate().before(startDate)) && (!record.getDate().after(endDate))){
+               aveList.add(getWindowAverage(startDate,windowSize,dateSortedPrices));
+            }
+            if (record.getDate().after(endDate))
+                break;
+        }
+        return aveList;
+    }
+
+    public double getWindowAverage(Date startDate, int windowSize, List<PriceRecord> dateSortedPrices){
+
+        for(PriceRecord record : dateSortedPrices){
+            int priceNumber = 0;
+            if (record.getDate().equals(startDate)){
+                double totalPrice = 0;
+                for (int i = dateSortedPrices.indexOf(record);i< i+windowSize;i++, priceNumber ++){
+                    if (i > dateSortedPrices.size()-1)
+                        break;
+                    totalPrice += dateSortedPrices.get(i).getAdjClose();
+                }
+                return totalPrice/priceNumber;
+            }
+        }
+        return 0;
+    }
+
+
+
 
     public void correctPrices(String fileName){
         List<PriceRecord> correctionList = loadFile(fileName);
